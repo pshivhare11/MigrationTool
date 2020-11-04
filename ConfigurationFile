@@ -1,0 +1,155 @@
+{
+  "ChangeSetMappingFile": null,
+  "Source": {
+    "ObjectType": "TfsTeamProjectConfig",
+    "Collection": "",
+    "Project": "",
+    "ReflectedWorkItemIDFieldName": "Custom.ReflectedWorkItemId",
+    "AllowCrossProjectLinking": false,
+    "PersonalAccessToken": "",
+    "LanguageMaps": {
+      "AreaPath": "Area",
+      "IterationPath": "Iteration"
+    }
+  },
+  "Target": {
+    "ObjectType": "TfsTeamProjectConfig",
+	"Collection": "",
+    "Project": "",
+    "ReflectedWorkItemIDFieldName": "Custom.ReflectedWorkItemId",
+    "AllowCrossProjectLinking": false,
+    "PersonalAccessToken": "",
+    "LanguageMaps": {
+      "AreaPath": "Area",
+      "IterationPath": "Iteration"
+    }
+  },
+  "FieldMaps": [
+    {
+      "ObjectType": "MultiValueConditionalMapConfig",
+      "WorkItemTypeName": "*",
+      "sourceFieldsAndValues": {
+        "Field1": "Value1",
+        "Field2": "Value2"
+      },
+      "targetFieldsAndValues": {
+        "Field1": "Value1",
+        "Field2": "Value2"
+      }
+    },
+    {
+      "ObjectType": "FieldBlankMapConfig",
+      "WorkItemTypeName": "*",
+      "targetField": "TfsMigrationTool.ReflectedWorkItemId"
+    },
+    {
+      "ObjectType": "FieldValueMapConfig",
+      "WorkItemTypeName": "*",
+      "sourceField": "System.State",
+      "targetField": "System.State",
+      "valueMapping": {
+        "Proposed": "Proposed",
+		"Approved": "Approved",
+		"Active": "Active",
+		"In Progress": "Resolved",				
+		"Done": "Closed",
+		"Completed":"Closed",
+		"Resolved":"Resolved"
+      }
+    },
+    {
+      "ObjectType": "FieldtoFieldMapConfig",
+      "WorkItemTypeName": "*",
+      "sourceField": "Microsoft.VSTS.Common.BacklogPriority",
+      "targetField": "Microsoft.VSTS.Common.StackRank",
+      "defaultValue": null
+    },
+    {
+      "ObjectType": "FieldtoFieldMultiMapConfig",
+      "WorkItemTypeName": "*",
+      "SourceToTargetMappings": {
+        "SourceField1": "TargetField1",
+        "SourceField2": "TargetField2"
+      }
+    },
+    {
+      "ObjectType": "FieldtoTagMapConfig",
+      "WorkItemTypeName": "*",
+      "sourceField": "System.State",
+      "formatExpression": "ScrumState:{0}"
+    },
+    {
+      "ObjectType": "FieldMergeMapConfig",
+      "WorkItemTypeName": "*",
+      "sourceField1": "System.Description",
+      "sourceField2": "Microsoft.VSTS.Common.AcceptanceCriteria",
+      "targetField": "System.Description",
+      "formatExpression": "{0} <br/><br/><h3>Acceptance Criteria</h3>{1}",
+      "doneMatch": "##DONE##"
+    },
+    {
+      "ObjectType": "RegexFieldMapConfig",
+      "WorkItemTypeName": "*",
+      "sourceField": "COMPANY.PRODUCT.Release",
+      "targetField": "COMPANY.DEVISION.MinorReleaseVersion",
+      "pattern": "PRODUCT \\d{4}.(\\d{1})",
+      "replacement": "$1"
+    },
+    {
+      "ObjectType": "FieldValuetoTagMapConfig",
+      "WorkItemTypeName": "*",
+      "sourceField": "Microsoft.VSTS.CMMI.Blocked",
+      "pattern": "Yes",
+      "formatExpression": "{0}"
+    },
+    {
+      "ObjectType": "TreeToTagMapConfig",
+      "WorkItemTypeName": "*",
+      "toSkip": 3,
+      "timeTravel": 1
+    }
+  ],
+  "GitRepoMapping": null,
+  "LogLevel": "Information",
+  "Processors": [
+    {
+      "ObjectType": "WorkItemMigrationConfig",
+      "ReplayRevisions": true,
+      "PrefixProjectToNodes": false,
+      "UpdateCreatedDate": false,
+      "UpdateCreatedBy": false,
+      "BuildFieldTable": false,
+      "AppendMigrationToolSignatureFooter": false,
+      "WIQLQueryBit": "AND [System.WorkItemType] NOT IN ('Test Plan', 'Test Case' , 'Test Suite' )",
+      "WIQLOrderBit": "[System.ChangedDate] desc",
+      "Enabled": true,
+      "LinkMigration": true,
+      "AttachmentMigration": true,
+      "AttachmentWorkingPath": "c:\\temp\\WorkItemAttachmentWorkingFolder\\",
+      "FixHtmlAttachmentLinks": true,
+      "SkipToFinalRevisedWorkItemType": true,
+      "WorkItemCreateRetryLimit": 5,
+      "FilterWorkItemsThatAlreadyExistInTarget": false,
+      "PauseAfterEachWorkItem": false,
+      "AttachmentMaxSize": 480000000,
+      "CollapseRevisions": false,
+      "LinkMigrationSaveEachAsAdded": false,
+      "GenerateMigrationComment": false,
+      "NodeBasePaths": [
+        "Product\\Area\\Path1",
+        "Product\\Area\\Path2"
+      ],
+      "WorkItemIDs": null
+    }
+  ],
+  "Version": "11.6",
+  "workaroundForQuerySOAPBugEnabled": false,
+  "WorkItemTypeDefinition": {
+    "sourceWorkItemTypeName": "targetWorkItemTypeName",
+	"Bug": "Bug",
+	"Epic": "Epic",
+	"Feature": "Feature",
+	"Requirement": "Product Backlog Item" ,
+	"Task" : "Task"
+  }
+}
